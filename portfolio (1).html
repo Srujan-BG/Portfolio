@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Srujan Galagali — Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --ink: #111010;
+      --paper: #f5f0e8;
+      --cream: #ede7d8;
+      --accent: #c8622a;
+      --accent2: #3a5a8c;
+      --muted: #7a7060;
+      --line: #d0c8b8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--paper);
+      color: var(--ink);
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 1000; opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(245,240,232,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.82rem; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--muted); text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 0 4rem;
+      padding-top: 80px;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-circle {
+      position: absolute;
+      right: -10vw; top: 50%; transform: translateY(-50%);
+      width: 55vw; height: 55vw;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 40%, #dcc8a8 0%, #c8a87a 60%, transparent 80%);
+      opacity: 0.4;
+      z-index: 0;
+    }
+    .hero-left { position: relative; z-index: 1; }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--accent); border: 1px solid var(--accent);
+      padding: 0.3rem 0.9rem; border-radius: 2px;
+      margin-bottom: 1.8rem;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-name {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.0;
+      margin-bottom: 0.6rem;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero-name em { color: var(--accent); font-style: italic; }
+    .hero-title {
+      font-size: 1rem; color: var(--muted); letter-spacing: 0.04em;
+      margin-bottom: 2rem;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-bio {
+      font-size: 1.05rem; line-height: 1.75; color: #3a3530;
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .hero-cta {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+    .btn-primary {
+      background: var(--ink); color: var(--paper);
+      padding: 0.85rem 2rem; font-size: 0.85rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border: none; cursor: pointer; text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--accent); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--ink);
+      padding: 0.85rem 2rem; font-size: 0.85rem;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      border: 1.5px solid var(--ink); cursor: pointer; text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+    .hero-right {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      animation: fadeUp 0.7s 0.2s ease both;
+    }
+    .avatar-frame {
+      width: 360px; height: 420px;
+      background: var(--cream);
+      border: 1.5px solid var(--line);
+      position: relative;
+      overflow: hidden;
+    }
+    .avatar-frame::before {
+      content: '';
+      position: absolute; inset: 12px;
+      border: 1px solid var(--line);
+      z-index: 1;
+    }
+    .avatar-initials {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 6rem; color: var(--accent); opacity: 0.18;
+      letter-spacing: -0.05em;
+    }
+    .avatar-placeholder-text {
+      position: absolute; bottom: 2rem; left: 0; right: 0;
+      text-align: center; font-size: 0.72rem;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted);
+    }
+    .stats-row {
+      position: absolute; bottom: -2rem; left: -2rem;
+      display: flex; gap: 1.5rem;
+    }
+    .stat-chip {
+      background: var(--ink); color: var(--paper);
+      padding: 0.8rem 1.4rem;
+    }
+    .stat-chip .num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem; display: block;
+    }
+    .stat-chip .lbl {
+      font-size: 0.68rem; letter-spacing: 0.1em;
+      text-transform: uppercase; color: #9a9080;
+    }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 4rem; }
+    .section-header {
+      display: flex; align-items: center; gap: 1.5rem;
+      margin-bottom: 3.5rem;
+    }
+    .section-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem; color: var(--line);
+      line-height: 1; user-select: none;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+    }
+    .section-title span { color: var(--accent); }
+    .section-divider {
+      width: 100%; height: 1px;
+      background: var(--line);
+      margin-bottom: 4rem;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience { background: var(--cream); }
+    .exp-list { display: flex; flex-direction: column; gap: 0; }
+    .exp-item {
+      display: grid; grid-template-columns: 180px 1fr;
+      gap: 2rem; padding: 2.2rem 0;
+      border-bottom: 1px solid var(--line);
+      transition: background 0.2s;
+      cursor: default;
+    }
+    .exp-item:first-child { border-top: 1px solid var(--line); }
+    .exp-item:hover { background: rgba(200,98,42,0.04); padding-left: 1rem; padding-right: 1rem; margin: 0 -1rem; }
+    .exp-dates {
+      font-size: 0.78rem; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--muted);
+      padding-top: 0.3rem;
+    }
+    .exp-company {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem; margin-bottom: 0.2rem;
+    }
+    .exp-role {
+      font-size: 0.82rem; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--accent);
+      margin-bottom: 0.8rem;
+    }
+    .exp-desc { font-size: 0.95rem; line-height: 1.7; color: #3a3530; }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1.5px;
+      background: var(--line);
+      border: 1.5px solid var(--line);
+    }
+    .project-card {
+      background: var(--paper);
+      padding: 2.5rem;
+      position: relative; overflow: hidden;
+      transition: background 0.25s;
+    }
+    .project-card:hover { background: var(--cream); }
+    .project-card:hover .project-arrow { transform: translate(4px,-4px); }
+    .project-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 3rem; color: var(--line);
+      position: absolute; top: 1.5rem; right: 2rem;
+      line-height: 1;
+    }
+    .project-tag {
+      font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.2rem; display: block;
+    }
+    .project-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.35rem; margin-bottom: 0.8rem; line-height: 1.3;
+    }
+    .project-desc { font-size: 0.9rem; line-height: 1.7; color: #3a3530; margin-bottom: 1.5rem; }
+    .project-tech { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tech-pill {
+      font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 0.25rem 0.7rem; border: 1px solid var(--line);
+      color: var(--muted);
+    }
+    .project-arrow {
+      position: absolute; bottom: 2rem; right: 2rem;
+      font-size: 1.2rem; color: var(--accent);
+      transition: transform 0.2s;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--cream); }
+    .skills-cols {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 3rem;
+    }
+    .skill-group-title {
+      font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--accent); margin-bottom: 1.4rem;
+      padding-bottom: 0.6rem; border-bottom: 1px solid var(--line);
+    }
+    .skill-list { list-style: none; }
+    .skill-list li {
+      font-size: 0.95rem; line-height: 1;
+      padding: 0.75rem 0;
+      border-bottom: 1px solid rgba(208,200,184,0.5);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .skill-list li:last-child { border-bottom: none; }
+    .skill-dots { display: flex; gap: 4px; }
+    .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--line);
+    }
+    .dot.filled { background: var(--accent); }
+
+    /* ── EDUCATION ── */
+    .edu-list { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; background: var(--line); border: 1.5px solid var(--line); }
+    .edu-card {
+      background: var(--paper);
+      padding: 2.5rem;
+    }
+    .edu-card:hover { background: var(--cream); }
+    .edu-year {
+      font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 1rem;
+    }
+    .edu-degree {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; margin-bottom: 0.4rem;
+    }
+    .edu-school { font-size: 0.9rem; color: var(--accent); margin-bottom: 0.8rem; }
+    .edu-note { font-size: 0.88rem; line-height: 1.6; color: #3a3530; }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--ink); color: var(--paper);
+      text-align: center;
+    }
+    #contact .section-num { color: #2a2820; }
+    #contact .section-title { color: var(--paper); }
+    #contact .section-title span { color: #c8a87a; }
+    .contact-tagline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.5rem, 3vw, 2.5rem);
+      font-style: italic;
+      color: #c8a87a; margin-bottom: 1rem;
+    }
+    .contact-sub {
+      font-size: 1rem; color: #9a9080; margin-bottom: 3rem;
+    }
+    .contact-links { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+    .contact-link {
+      color: var(--paper); text-decoration: none;
+      font-size: 0.82rem; letter-spacing: 0.1em; text-transform: uppercase;
+      border-bottom: 1px solid #3a3830;
+      padding-bottom: 3px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .contact-link:hover { border-color: #c8a87a; color: #c8a87a; }
+    .contact-email {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.2rem, 2.5vw, 2rem);
+      color: var(--paper); text-decoration: none;
+      display: inline-block; margin-bottom: 3rem;
+      border-bottom: 1px solid #3a3830;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .contact-email:hover { border-color: #c8a87a; color: #c8a87a; }
+
+    footer {
+      background: var(--ink); color: #4a4840;
+      padding: 1.5rem 4rem;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid #2a2820;
+      font-size: 0.75rem; letter-spacing: 0.06em;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 2rem; }
+      .hero { grid-template-columns: 1fr; padding: 2rem; padding-top: 90px; text-align: center; }
+      .hero-right { display: none; }
+      .hero-bio { margin: 0 auto 2.5rem; }
+      .hero-cta { justify-content: center; }
+      section { padding: 4rem 2rem; }
+      .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
+      .edu-list { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Srujan Galagali</div>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#certificates">Certificates</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg-circle"></div>
+  <div class="hero-left">
+    <span class="hero-tag">Open to Opportunities</span>
+    <h1 class="hero-name">Srujan<br><em>Galagali</em></h1>
+    <p class="hero-title">Computer Science Student &nbsp;&middot;&nbsp; Secretary, IEEE AESS Student Branch</p>
+    <p class="hero-bio">
+      A Computer Science student passionate about emerging technologies, research, and innovation. I actively contribute to IEEE activities as Secretary of the AESS Student Branch Chapter — coordinating workshops, technical events, and fostering a culture of knowledge sharing. Skilled in Python, C, and Java, and always eager to collaborate on meaningful projects in computer science and technology.
+    </p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn-primary">Get in Touch</a>
+      <a href="#projects" class="btn-outline">View Work</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="avatar-frame">
+      <div class="avatar-initials">SG</div>
+      <div class="avatar-placeholder-text">Your photo here</div>
+    </div>
+    <div class="stats-row">
+      <div class="stat-chip">
+        <span class="num">2nd</span>
+        <span class="lbl">Year B.E.</span>
+      </div>
+      <div class="stat-chip">
+        <span class="num">IEEE</span>
+        <span class="lbl">Secretary</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Work <span>Experience</span></h2>
+  </div>
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div class="exp-dates">2024 — Present</div>
+      <div>
+        <div class="exp-company">IEEE AESS Student Branch Chapter</div>
+        <div class="exp-role">Secretary</div>
+        <p class="exp-desc">Assist in coordinating technical events, workshops, and activities that encourage innovation and knowledge sharing among students. Responsible for branch communications, meeting documentation, and supporting the smooth running of all chapter activities. Contributing to the growth of the student technical community at Basaveshwar Engineering College.</p>
+      </div>
+    </div>
+    <div class="exp-item reveal">
+      <div class="exp-dates">2024 — Present</div>
+      <div>
+        <div class="exp-company">Basaveshwar Engineering College</div>
+        <div class="exp-role">B.E. Computer Science Student</div>
+        <p class="exp-desc">Pursuing a Bachelor of Engineering in Computer Science, building a strong foundation in programming, data structures, algorithms, and software development. Actively applying classroom learning to hands-on projects and collaborative technical work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Selected <span>Projects</span></h2>
+  </div>
+  <div class="projects-grid">
+    <div class="project-card reveal">
+      <span class="project-num">01</span>
+      <span class="project-tag">Application · 1st Year B.E.</span>
+      <h3 class="project-name">Smart Attendance System</h3>
+      <p class="project-desc">Developed a Smart Attendance System application during 1st year of B.E. The application automates the process of recording and managing student attendance, improving accuracy and reducing manual effort for educators.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Application Development</span>
+        <span class="tech-pill">Problem Solving</span>
+      </div>
+      <span class="project-arrow">↗</span>
+    </div>
+    <div class="project-card reveal" style="background: var(--cream); display:flex; align-items:center; justify-content:center; min-height:280px;">
+      <div style="text-align:center; color: var(--muted);">
+        <div style="font-family:'Playfair Display',serif; font-size:2.5rem; color:var(--line); margin-bottom:1rem;">+</div>
+        <div style="font-size:0.78rem; letter-spacing:0.1em; text-transform:uppercase;">More projects coming soon</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Core <span>Skills</span></h2>
+  </div>
+  <div class="skills-cols">
+    <div class="reveal">
+      <div class="skill-group-title">Programming Languages</div>
+      <ul class="skill-list">
+        <li>C <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></span></li>
+        <li>Python <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></span></li>
+        <li>Java <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></span></li>
+        <li>Kotlin <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></span></li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="skill-group-title">Tools &amp; Technologies</div>
+      <ul class="skill-list">
+        <li>Git &amp; GitHub <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></span></li>
+        <li>VS Code <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></span></li>
+        <li>Android Development <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></span></li>
+        <li>Cybersecurity Fundamentals <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span><span class="dot"></span></span></li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="skill-group-title">Soft Skills</div>
+      <ul class="skill-list">
+        <li>Leadership <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></span></li>
+        <li>Communication <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></span></li>
+        <li>Teamwork &amp; Collaboration <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot"></span></span></li>
+        <li>Event Coordination <span class="skill-dots"><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span><span class="dot filled"></span></span></li>
+      </ul>
+    </div>
+    <div class="reveal">
+      <div class="skill-group-title">Certifications &amp; Achievements</div>
+      <ul class="skill-list">
+        <li>Android App using Kotlin — IIT Bombay (97.50%)</li>
+        <li>Cybersecurity &amp; Ethical Hacking — HacFy</li>
+        <li>Idea-Ignite — IEEE Reliability Society, BEC</li>
+        <li>Avishkaar-2025 — Project Exhibition, BEC</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Education &amp; <span>Training</span></h2>
+  </div>
+  <div class="edu-list">
+    <div class="edu-card reveal">
+      <div class="edu-year">2024 — Present</div>
+      <div class="edu-degree">B.E. — Computer Science &amp; Engineering</div>
+      <div class="edu-school">Basaveshwar Engineering College, Bagalkot</div>
+      <p class="edu-note">Currently in 2nd year. Actively involved in IEEE AESS Student Branch as Secretary, contributing to technical events, workshops, and student community initiatives.</p>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-year">Completed 2024</div>
+      <div class="edu-degree">PU / 12th — Science</div>
+      <div class="edu-school">Deeksha PU College, Bangalore</div>
+      <p class="edu-note">Completed Pre-University education with a focus on Physics, Chemistry, Mathematics, and Computer Science.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATES -->
+<section id="certificates" style="background: var(--paper);">
+  <div class="section-header reveal">
+    <span class="section-num">05</span>
+    <h2 class="section-title">Certificates &amp; <span>Achievements</span></h2>
+  </div>
+  <div class="projects-grid" style="grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+
+    <div class="project-card reveal">
+      <span class="project-num" style="font-size:2rem;">🏆</span>
+      <span class="project-tag">IIT Bombay · Nov 2025</span>
+      <h3 class="project-name">Android App Development using Kotlin</h3>
+      <p class="project-desc">Completed the Android App using Kotlin training by EduPyramids, SINE, IIT Bombay. Passed the online examination conducted remotely from IIT Bombay with a score of <strong>97.50%</strong>.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Kotlin</span>
+        <span class="tech-pill">Android</span>
+        <span class="tech-pill">Score: 97.50%</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <span class="project-num" style="font-size:2rem;">🔐</span>
+      <span class="project-tag">HacFy · Dec 2024</span>
+      <h3 class="project-name">Cybersecurity &amp; Ethical Hacking Workshop</h3>
+      <p class="project-desc">Attended a two-day workshop on Cybersecurity and Ethical Hacking conducted by HacFy (IEEE Bangalore Section / IEEE Computer Society). Covered key cybersecurity concepts and ethical hacking techniques.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Cybersecurity</span>
+        <span class="tech-pill">Ethical Hacking</span>
+        <span class="tech-pill">IEEE</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <span class="project-num" style="font-size:2rem;">💡</span>
+      <span class="project-tag">IEEE Reliability Society · Oct 2024</span>
+      <h3 class="project-name">Idea-Ignite — Idea Presentation &amp; Debate</h3>
+      <p class="project-desc">Actively participated in 'Idea-Ignite', an idea presentation and debate competition organised by the IEEE Reliability Society Chapter (SBC35261-E) at Basaveshwar Engineering College, Bagalkote on 28–29 October 2024.</p>
+      <div class="project-tech">
+        <span class="tech-pill">IEEE</span>
+        <span class="tech-pill">Idea Presentation</span>
+        <span class="tech-pill">Debate</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <span class="project-num" style="font-size:2rem;">🚀</span>
+      <span class="project-tag">BEC · May 2025</span>
+      <h3 class="project-name">Avishkaar-2025 — Project Exhibition</h3>
+      <p class="project-desc">Participated in Avishkaar-2025, a college-level project exhibition and competition organised by the Department of Electronics &amp; Communication Engineering at Basaveshwar Engineering College on 9th May 2025.</p>
+      <div class="project-tech">
+        <span class="tech-pill">Project Exhibition</span>
+        <span class="tech-pill">ECE Dept.</span>
+        <span class="tech-pill">BEC</span>
+      </div>
+    </div>
+
+  </div>
+  <p class="reveal" style="margin-top:2rem; font-size:0.88rem; color:var(--muted); font-style:italic;">+ More certificates from PU, school, and private competitions available on request.</p>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-header reveal" style="justify-content:center;">
+    <span class="section-num">06</span>
+    <h2 class="section-title">Let's <span>Connect</span></h2>
+  </div>
+  <p class="contact-tagline reveal">"Engineering the future, one connection at a time."</p>
+  <p class="contact-sub reveal">Based in Jamkhandi, Karnataka · Open to collaborations, internships &amp; tech opportunities.</p>
+  <a href="/cdn-cgi/l/email-protection#5b28292e313a75393c6b6d1b3c363a323775383436" class="contact-email reveal"><span class="__cf_email__" data-cfemail="354647405f541b57520503755258545c591b565a58">[email&#160;protected]</span></a>
+  <div class="contact-links reveal">
+    <a href="https://www.linkedin.com/in/srujan-b-galagali-629487334" target="_blank" class="contact-link">LinkedIn</a>
+    <a href="tel:+919945317172" class="contact-link">+91 99453 17172</a>
+    <a href="/cdn-cgi/l/email-protection#a4d7d6d1cec58ac6c39492e4c3c9c5cdc88ac7cbc9" class="contact-link">Email Me</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Srujan Galagali</span>
+  <span>Built with care</span>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare
